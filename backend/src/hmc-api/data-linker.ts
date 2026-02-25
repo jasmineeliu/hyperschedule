@@ -158,7 +158,7 @@ function processCourse(
         let courseCode: APIv4.CourseCode;
         try {
             courseCode = APIv4.parseCXCourseCode(c.code);
-        } catch (e) {
+        } catch (_e) {
             logger.trace(`Malformed course code ${c.code}`);
             continue;
         }
@@ -576,7 +576,7 @@ export function linkCourseData(
     );
     const res: APIv4.Section[] = [];
     for (let section of linked) {
-        if (section.permCount === undefined) section.permCount = 0;
+        section.permCount ??= 0;
         const validatedResult = APIv4.Section.safeParse(section);
 
         if (validatedResult.success) {
